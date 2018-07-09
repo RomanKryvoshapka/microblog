@@ -14,9 +14,6 @@ from datetime import datetime
 @app.route('/index')
 @login_required
 def index():
-    msg = Message("HELLO", sender='kryvoshapka.roman@gmail.com', recipients=['kryvoshapka.roman@gmail.com'])
-    mail.send(msg)
-    1 + '1'
     #user = {'username': 'romanij'}
     posts = [
         {
