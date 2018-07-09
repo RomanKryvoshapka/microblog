@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
+from flask_mail import Message
 
-from app import app, db
+from app import app, db, mail
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
@@ -13,6 +14,9 @@ from datetime import datetime
 @app.route('/index')
 @login_required
 def index():
+    msg = Message("HELLO", sender='kryvoshapka.roman@gmail.com', recipients=['kryvoshapka.roman@gmail.com'])
+    mail.send(msg)
+    1 + '1'
     #user = {'username': 'romanij'}
     posts = [
         {
