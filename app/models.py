@@ -26,7 +26,6 @@ class User(UserMixin, db.Model):
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -42,7 +41,7 @@ class User(UserMixin, db.Model):
 
     def follow(self, user):
         if not self.is_following(user):
-            self.follower.append(user)
+            self.followed.append(user)
 
     def unfollow(self, user):
         if self.is_following(user):
@@ -65,7 +64,6 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post{}>'.format(self.body)
-
 
 
 @login.user_loader
