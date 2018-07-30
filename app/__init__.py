@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
@@ -8,6 +8,7 @@ import logging
 from logging.handlers import SMTPHandler
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_babel import Babel
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,6 +19,7 @@ mail = Mail(app)
 login.login_view = 'login'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+babel = Babel(app)
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
@@ -34,5 +36,12 @@ if not app.debug:
             credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
+
+
+@babel.localeselector
+def get_locale():
+    #return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return 'en'
+
 
 from app import routes, models, errors
